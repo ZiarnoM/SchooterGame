@@ -1,3 +1,7 @@
+//
+// Created by michal on 05.04.2022.
+//
+
 #include "Game.h"
 
 void Game::initVariables() {

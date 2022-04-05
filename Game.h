@@ -1,9 +1,13 @@
+//
+// Created by michal on 05.04.2022.
+//
+
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
 
-#ifndef NAUKA_PIERWSZYPROJEKT_GAME_H
-#define NAUKA_PIERWSZYPROJEKT_GAME_H
+#ifndef SCHOOTERGAME_GAME_H
+#define SCHOOTERGAME_GAME_H
 
 
 class Game {
@@ -34,4 +38,4 @@ public:
 };
 
 
-#endif
+#endif //SCHOOTERGAME_GAME_H
