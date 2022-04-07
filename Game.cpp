@@ -5,16 +5,15 @@
 #include "Game.h"
 
 void Game::initVariables() {
+    this->endGame = false;
     this->window = nullptr;
 }
 void Game::initWindow() {
-    this->videoMode.height=500;
-    this->videoMode.width=500;
+    this->videoMode = sf::VideoMode(500,500);
     this->window = new sf::RenderWindow(this->videoMode, "My first Game",sf::Style::Titlebar | sf::Style::Close);
-    this -> window ->setFramerateLimit(144);
-
 }
 
+// Constructors and Destructors
 Game::Game() {
     this->initVariables();
     this->initWindow();
@@ -43,6 +42,7 @@ void Game::pollEvents(){
 }
 
 void Game::update() {
+    // listen to event and do stuff
     this->Game::pollEvents();
 //opdate mouse position relative to window
     std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";

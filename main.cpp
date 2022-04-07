@@ -7,7 +7,7 @@ int main()
     sf::CircleShape shape;
     shape.setRadius(40.f);
     shape.setPosition(100.f, 100.f);
-    shape.setFillColor(sf::Color::Cyan);
+    shape.setFillColor(sf::Color::Magenta);
 
     while (game.running())
     {
@@ -15,4 +15,5 @@ int main()
         game.render();
 
     }
+    return 0;
 }

@@ -13,19 +13,18 @@
 class Game {
 
 private:
-
-    sf::RenderWindow *window;
     sf::VideoMode videoMode;
+    sf::RenderWindow* window;
+    bool endGame;
     sf::Event ev;
 
     void initVariables();
-
     void initWindow();
 
 public:
+    // Constructors and Destructors
     Game();
-
-    virtual ~Game();
+    ~Game();
 
     const bool running() const;
 
