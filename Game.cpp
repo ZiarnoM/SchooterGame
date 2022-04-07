@@ -50,5 +50,6 @@ void Game::update() {
 
 void Game::render() {
     this->window->clear(sf::Color(255,0,255,255));
+    this->player.render(this->window);
     this->window->display();
 }

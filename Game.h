@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <iostream>
+#include "Player.h"
 
 #ifndef SCHOOTERGAME_GAME_H
 #define SCHOOTERGAME_GAME_H
@@ -18,13 +19,15 @@ private:
     bool endGame;
     sf::Event ev;
 
+    Player player;
+
     void initVariables();
     void initWindow();
 
 public:
     // Constructors and Destructors
     Game();
-    ~Game();
+    virtual ~Game();
 
     const bool running() const;
 
