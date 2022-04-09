@@ -8,9 +8,13 @@ void Game::initVariables() {
     this->endGame = false;
     this->window = nullptr;
 }
+
 void Game::initWindow() {
-    this->videoMode = sf::VideoMode(500,500);
-    this->window = new sf::RenderWindow(this->videoMode, "My first Game",sf::Style::Titlebar | sf::Style::Close);
+    sf::Image icon;
+    icon.loadFromFile("../textures/logo.png"); // File/Image/Pixel
+    this->videoMode = sf::VideoMode(500, 500);
+    this->window = new sf::RenderWindow(this->videoMode, "Schooter Game", sf::Style::Titlebar | sf::Style::Close);
+    this->window->setIcon(32, 32, icon.getPixelsPtr());
     this->window->setFramerateLimit(60);
 }
 
@@ -23,14 +27,15 @@ Game::Game() {
 Game::~Game() {
     delete this->window;
 }
-const bool Game::running() const{
+
+const bool Game::running() const {
     return this->window->isOpen();
 }
 
-void Game::pollEvents(){
+void Game::pollEvents() {
 
-    while(this->window->pollEvent(this->ev)){
-        switch(this->ev.type){
+    while (this->window->pollEvent(this->ev)) {
+        switch (this->ev.type) {
             case sf::Event::Closed:
                 this->window->close();
                 break;
@@ -45,14 +50,14 @@ void Game::pollEvents(){
 void Game::update() {
     // listen to event and do stuff
     this->Game::pollEvents();
-//opdate mouse position relative to window
-    std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
+//update mouse position relative to window
+    //std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
 
     this->player.update(this->window);
 }
 
 void Game::render() {
-    this->window->clear(sf::Color(255,0,255,255));
+    this->window->clear(sf::Color(255, 0, 255, 255));
     // render stuff
     this->player.render(this->window);
     this->window->display();
