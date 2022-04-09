@@ -11,6 +11,7 @@ void Game::initVariables() {
 void Game::initWindow() {
     this->videoMode = sf::VideoMode(500,500);
     this->window = new sf::RenderWindow(this->videoMode, "My first Game",sf::Style::Titlebar | sf::Style::Close);
+    this->window->setFramerateLimit(60);
 }
 
 // Constructors and Destructors
@@ -46,10 +47,13 @@ void Game::update() {
     this->Game::pollEvents();
 //opdate mouse position relative to window
     std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
+
+    this->player.update(this->window);
 }
 
 void Game::render() {
     this->window->clear(sf::Color(255,0,255,255));
+    // render stuff
     this->player.render(this->window);
     this->window->display();
 }

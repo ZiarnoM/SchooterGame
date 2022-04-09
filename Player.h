@@ -14,13 +14,17 @@ private:
     sf::Texture texture;
     sf::Sprite playerSprite;
 
+    float movementSpeed;
+
     void initVariables();
     void initPlayer();
 
 public:
-    Player();
+    Player(float x = 0.f, float y=0.f);
     virtual ~Player();
-    void update();
+
+    void updateInput();
+    void update(sf::RenderTarget* target);
     void render(sf::RenderTarget* target);
 };
 
