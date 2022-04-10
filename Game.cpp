@@ -50,10 +50,8 @@ void Game::pollEvents() {
 void Game::update() {
     // listen to event and do stuff
     this->Game::pollEvents();
-//update mouse position relative to window
-    //std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
-
-    this->player.update(this->window);
+    sf::Vector2i mousePosition = sf::Mouse::getPosition(*this->window);
+    this->player.update(this->window,mousePosition);
 }
 
 void Game::render() {
