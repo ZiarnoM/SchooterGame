@@ -18,15 +18,17 @@ private:
 
     void initVariables();
     void initPlayer();
+    void initTexture();
 
 public:
-    Player(float x = 0.f, float y=0.f);
+    Player(float x = 200.f, float y=200.f);
     virtual ~Player();
 
     void updateInput();
     void updateWindowBoundsCollision(const sf::RenderTarget* target);
-    void update(const sf::RenderTarget* target);
+    void update(const sf::RenderTarget* target, sf::Vector2i mousePosition);
     void render(sf::RenderTarget* target);
+    void rotatePlayer(sf::Vector2i mousePosition);
 };
 
 

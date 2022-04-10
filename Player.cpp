@@ -4,19 +4,23 @@
 
 #include <iostream>
 #include "Player.h"
+#include <math.h>
 
 void Player::initVariables() {
     this->movementSpeed = 10.f;
 }
 
 void Player::initPlayer() {
+    this->initTexture();
+    playerSprite.scale(sf::Vector2f(0.1, 0.1));
+}
+void Player::initTexture() {
     if (!this->texture.loadFromFile("../textures/player.png")) {
         std::cout << "Could not load player texture" << std::endl;
     }
     playerSprite.setTexture(texture);
-    playerSprite.scale(sf::Vector2f(0.1, 0.1));
+    this->playerSprite.setOrigin(texture.getSize().x/2,texture.getSize().y/2);
 }
-
 Player::Player(float x, float y) {
     this->playerSprite.setPosition(x, y);
     this->initVariables();
@@ -24,13 +28,13 @@ Player::Player(float x, float y) {
 }
 
 Player::~Player() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 
-    }
 }
 
-void Player::update(const sf::RenderTarget *target) {
+void Player::update(const sf::RenderTarget *target, sf::Vector2i mousePosition) {
     this->updateInput();
+    // rotate player to mouse
+    this->rotatePlayer(mousePosition);
     //collision
     this->updateWindowBoundsCollision(target);
 }
@@ -76,3 +80,25 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget *target) {
         );
     }
 }
+
+void Player::rotatePlayer(sf::Vector2i position) {
+    sf::FloatRect playerBounds = this->playerSprite.getGlobalBounds();
+    // exit if mouse is over player
+    if (!((position.x<=playerBounds.left ||position.x>=playerBounds.left+playerBounds.width)||
+    (position.y<=playerBounds.top ||position.y>=playerBounds.top+playerBounds.height))) {
+        return;
+    }
+        const float PI = 3.14159265;
+
+        float dx = playerBounds.left + playerBounds.width / 2 - position.x;
+        float dy = playerBounds.top + playerBounds.height / 2 - position.y;
+
+        float rotation = (atan2(dy, dx)) * 180 / PI;
+//        std::cout << this->playerSprite.getOrigin().x << "\n";
+//        this->playerSprite.setOrigin(playerBounds.width/2,playerBounds.height/2);
+        this->playerSprite.setRotation(rotation - 90);
+
+}
+
+
+
