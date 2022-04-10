@@ -20,9 +20,9 @@ void Player::initTexture() {
         std::cout << "Could not load player texture" << std::endl;
     }
     playerSprite.setTexture(texture);
+
     this->playerSprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
 }
-
 Player::Player(float x, float y) {
     this->playerSprite.setPosition(x, y);
     this->initVariables();
@@ -92,8 +92,3 @@ void Player::rotatePlayer(sf::Vector2i position) {
     float rotation = (atan2(dy, dx)) * 180 / PI;
     this->playerSprite.setRotation(rotation);
 }
-
-
-
-
-
