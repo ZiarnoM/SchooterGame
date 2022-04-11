@@ -59,19 +59,20 @@ void Player::updateInput() {
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget *target) {
-    //left
+    //if player touch window border after move in specific direction, then move it in opposite
+    //left border
     if (this->playerSprite.getGlobalBounds().left <= 0.f) {
         this->playerSprite.move(this->movementSpeed, 0.f);
     }
-    //right
+    //right border
     if (this->playerSprite.getGlobalBounds().left + this->playerSprite.getGlobalBounds().width >= target->getSize().x) {
         this->playerSprite.move(-this->movementSpeed, 0.f);
     }
-    //top
+    //top border
     if (this->playerSprite.getGlobalBounds().top <= 0.f) {
         this->playerSprite.move(0.f, this->movementSpeed);
     }
-    //bottom
+    //bottom border
     if (this->playerSprite.getGlobalBounds().top + this->playerSprite.getGlobalBounds().height >= target->getSize().y) {
         this->playerSprite.move(0.f, -this->movementSpeed);
     }

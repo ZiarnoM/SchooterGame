@@ -3,7 +3,7 @@ project(SchooterGame)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(SchooterGame main.cpp Game.cpp Game.h Game.cpp Game.h Player.cpp Player.h)
+add_executable(SchooterGame main.cpp Game.cpp Game.h Game.cpp Game.h Player.cpp Player.h Bullet.cpp Bullet.h)
 
 set(SFML_DIR ../../SFML-2.5.1/lib/cmake/SFML)
 set(SFML_STATIC_LIBRARIES TRUE)
