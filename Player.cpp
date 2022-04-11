@@ -8,6 +8,8 @@
 
 void Player::initVariables() {
     this->movementSpeed = 5.f;
+    this->attackCooldownMax = 5.f;
+    this->attackCooldown = this->attackCooldownMax;
 }
 
 void Player::initPlayer() {
@@ -23,6 +25,7 @@ void Player::initTexture() {
 
     this->playerSprite.setOrigin(texture.getSize().x / 2, texture.getSize().y / 2);
 }
+
 Player::Player(float x, float y) {
     this->playerSprite.setPosition(x, y);
     this->initVariables();
@@ -34,28 +37,22 @@ Player::~Player() {
 }
 
 void Player::update(const sf::RenderTarget *target, sf::Vector2i mousePosition) {
-    this->updateInput();
     // rotate player to mouse
     this->rotatePlayer(mousePosition);
     //collision
     this->updateWindowBoundsCollision(target);
+    this->updateAttack();
 }
+
 
 void Player::render(sf::RenderTarget *target) {
     target->draw(this->playerSprite);
 }
 
-void Player::updateInput() {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-        this->playerSprite.move(0.f, -this->movementSpeed);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        this->playerSprite.move(0.f, this->movementSpeed);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-        this->playerSprite.move(-this->movementSpeed, 0.f);
-    } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-        this->playerSprite.move(this->movementSpeed, 0.f);
-    }
+void Player::updateAttack() {
+    if (this->attackCooldown < this->attackCooldownMax)
+        this->attackCooldown += 0.5f;
+
 }
 
 void Player::updateWindowBoundsCollision(const sf::RenderTarget *target) {
@@ -89,7 +86,32 @@ void Player::rotatePlayer(sf::Vector2i position) {
 
     float dx = playerBounds.left + playerBounds.width / 2 - position.x;
     float dy = playerBounds.top + playerBounds.height / 2 - position.y;
+    float dc = sqrt(pow(dx,2.0f)+pow(dy,2.0f));
+
+    this->bulletDirection.x = -dx/dc;
+    this->bulletDirection.y = -dy/dc;
 
     float rotation = (atan2(dy, dx)) * 180 / PI;
     this->playerSprite.setRotation(rotation);
 }
+
+void Player::move(float dirX, float dirY) {
+    this->playerSprite.move(this->movementSpeed * dirX, this->movementSpeed * dirY);
+}
+
+const sf::Vector2f &Player::getPos() const {
+    return this->playerSprite.getPosition();
+}
+
+const bool Player::canAttack() {
+    if (this->attackCooldown >= this->attackCooldownMax) {
+        this->attackCooldown = 0.f;
+        return true;
+    }
+    return false;
+}
+
+const sf::Vector2f &Player::getBulletDir() const {
+    return this->bulletDirection;
+}
+

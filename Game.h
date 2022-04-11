@@ -6,7 +6,8 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "Player.h"
-
+#include<map>
+#include "Bullet.h"
 #ifndef SCHOOTERGAME_GAME_H
 #define SCHOOTERGAME_GAME_H
 
@@ -19,10 +20,15 @@ private:
     bool endGame;
     sf::Event ev;
 
-    Player player;
+    std::map<std::string,sf::Texture*> textures;
+    std::vector<Bullet*> bullets;
+
+    Player* player;
 
     void initVariables();
     void initWindow();
+    void initTexture();
+    void initPlayer();
 
 public:
     // Constructors and Destructors
@@ -34,7 +40,8 @@ public:
     void pollEvents();
 
     void update();
-
+    void updateInput();
+    void updateBullets();
     void render();
 
 };

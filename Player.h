@@ -14,21 +14,39 @@ private:
     sf::Texture texture;
     sf::Sprite playerSprite;
 
+    sf::Vector2f bulletDirection;
+
     float movementSpeed;
+    float attackCooldown;
+    float attackCooldownMax;
 
     void initVariables();
+
     void initPlayer();
+
     void initTexture();
 
 public:
-    Player(float x = 200.f, float y=200.f);
+    Player(float x = 200.f, float y = 200.f);
+
     virtual ~Player();
 
-    void updateInput();
-    void updateWindowBoundsCollision(const sf::RenderTarget* target);
-    void update(const sf::RenderTarget* target, sf::Vector2i mousePosition);
-    void render(sf::RenderTarget* target);
+    const sf::Vector2f &getPos() const;
+    const sf::Vector2f &getBulletDir() const;
+
+    void updateWindowBoundsCollision(const sf::RenderTarget *target);
+
+    void update(const sf::RenderTarget *target, sf::Vector2i mousePosition);
+
+    void updateAttack();
+
+    const bool canAttack();
+
+    void render(sf::RenderTarget *target);
+
     void rotatePlayer(sf::Vector2i mousePosition);
+
+    void move(float dirX, float dirY);
 };
 
 
