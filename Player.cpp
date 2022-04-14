@@ -14,11 +14,11 @@ void Player::initVariables() {
 
 void Player::initPlayer() {
     this->initTexture();
-    playerSprite.scale(sf::Vector2f(0.1, 0.1));
+    playerSprite.scale(sf::Vector2f(0.1,0.1));
 }
 
 void Player::initTexture() {
-    if (!this->texture.loadFromFile("../textures/player.png")) {
+    if (!this->texture.loadFromFile("../Textures/player.png")) {
         std::cout << "Could not load player texture" << std::endl;
     }
     playerSprite.setTexture(texture);
@@ -78,10 +78,10 @@ void Player::updateWindowBoundsCollision(const sf::RenderTarget *target) {
 void Player::rotatePlayer(sf::Vector2i position) {
     sf::FloatRect playerBounds = this->playerSprite.getGlobalBounds();
     // exit if mouse is over player
-    if (!((position.x <= playerBounds.left || position.x >= playerBounds.left + playerBounds.width) ||
-          (position.y <= playerBounds.top || position.y >= playerBounds.top + playerBounds.height))) {
-        return;
-    }
+//    if (!((position.x <= playerBounds.left || position.x >= playerBounds.left + playerBounds.width) ||
+//          (position.y <= playerBounds.top || position.y >= playerBounds.top + playerBounds.height))) {
+//        return;
+//    }
     const float PI = 3.14159265;
 
     float dx = playerBounds.left + playerBounds.width / 2 - position.x;
@@ -91,8 +91,9 @@ void Player::rotatePlayer(sf::Vector2i position) {
     this->bulletDirection.x = -dx/dc;
     this->bulletDirection.y = -dy/dc;
 
-    float rotation = (atan2(dy, dx)) * 180 / PI;
-    this->playerSprite.setRotation(rotation);
+    //float rotation = (atan2(dy, dx)) * 180 / PI;
+    float rotation = (atan2(this->bulletDirection.y, this->bulletDirection.x)) * 180 / PI;
+    this->playerSprite.setRotation(rotation+180);
 }
 
 void Player::move(float dirX, float dirY) {

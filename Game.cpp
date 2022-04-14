@@ -4,6 +4,7 @@
 
 #include "Game.h"
 
+
 void Game::initVariables() {
     this->endGame = false;
     this->window = nullptr;
@@ -26,11 +27,15 @@ void Game::initTexture() {
     this->textures["BULLET"] = new sf::Texture();
     this->textures["BULLET"]->loadFromFile("../textures/bullet.png");
 }
+void Game::initWorldMap() {
+    this->gameWorld = new GameWorld();
+}
 
 // Constructors and Destructors
 Game::Game() {
     this->initVariables();
     this->initWindow();
+    this->initWorldMap();
     this->initTexture();
     this->initPlayer();
 }
@@ -77,8 +82,9 @@ void Game::update() {
 }
 
 void Game::render() {
-    this->window->clear(sf::Color(255, 0, 255, 255));
+    this->window->clear();
     // render stuff
+    this->gameWorld->update(this->window);
     this->player->render(this->window);
     for (auto *bullet: this->bullets) {
         bullet->render(this->window);
@@ -96,9 +102,14 @@ void Game::updateInput() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         this->player->move(0.f, 1.f);
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->player->canAttack()) {
-//        this->bullets.push_back(new Bullet(this->textures["BULLET"],this->player->getPos().x,this->player->getPos().y,0.f,-1.f,5.f));
-        this->bullets.push_back(new Bullet(this->textures["BULLET"], this->player->getPos().x, this->player->getPos().y,
-                                           this->player->getBulletDir().x, this->player->getBulletDir().y, 5.f));
+        this->bullets.push_back(new Bullet(
+                this->textures["BULLET"],
+                this->player->getPos().x,
+                this->player->getPos().y,
+                this->player->getBulletDir().x,
+                this->player->getBulletDir().y,
+                5.f)
+                );
     }
 }
 
@@ -106,7 +117,7 @@ void Game::updateBullets() {
     unsigned counter = 0;
     for (auto *bullet: this->bullets) {
         bullet->update();
-        // up,right,bottom,left
+        // check for collision and del, up,right,bottom,left
         if (
                 (bullet->getBounds().top + bullet->getBounds().height < 0.f) ||
                 (bullet->getBounds().left >= this->window->getSize().x) ||
@@ -120,6 +131,8 @@ void Game::updateBullets() {
         ++counter;
     }
 }
+
+
 
 
 

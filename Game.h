@@ -6,6 +6,7 @@
 #include <SFML/Window.hpp>
 #include <iostream>
 #include "Player.h"
+#include "GameWorld.h"
 #include<map>
 #include "Bullet.h"
 #ifndef SCHOOTERGAME_GAME_H
@@ -24,11 +25,13 @@ private:
     std::vector<Bullet*> bullets;
 
     Player* player;
+    GameWorld* gameWorld;
 
     void initVariables();
     void initWindow();
     void initTexture();
     void initPlayer();
+    void initWorldMap();
 
 public:
     // Constructors and Destructors
